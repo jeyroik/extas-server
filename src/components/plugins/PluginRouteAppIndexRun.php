@@ -1,14 +1,13 @@
 <?php
-namespace df\components\plugins;
+namespace extas\components\plugins;
 
-use extas\components\plugins\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class PluginRouteAppIndex
  *
- * @package df\components\plugins
+ * @package extas\components\plugins
  * @author jeyroik@gmail.com
  */
 class PluginRouteAppIndexRun extends Plugin
