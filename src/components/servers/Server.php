@@ -4,11 +4,13 @@ namespace extas\components\servers;
 use extas\components\Item;
 use extas\components\parameters\THasParameters;
 use extas\components\plugins\PluginRouterSubjectOperation;
+use extas\components\SystemContainer;
 use extas\components\templates\THasTemplate;
 use extas\components\THasDescription;
 use extas\components\THasName;
 use extas\interfaces\servers\IServer;
 
+use extas\interfaces\servers\templates\IServerTemplateRepository;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -41,6 +43,14 @@ class Server extends Item implements IServer
         $router($request, $response, $args);
 
         return $response;
+    }
+
+    /**
+     * @return \extas\interfaces\repositories\IRepository|mixed
+     */
+    public function getTemplateRepository()
+    {
+        return SystemContainer::getItem(IServerTemplateRepository::class);
     }
 
     /**
