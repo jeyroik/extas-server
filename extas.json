@@ -1,0 +1,94 @@
+{
+  "name": "extas.server",
+  "package_classes": [
+    {
+      "interface": "extas\\interfaces\\servers\\IServerRepository",
+      "class": "extas\\components\\servers\\ServerRepository"
+    },
+    {
+      "interface": "extas\\interfaces\\servers\\templates\\IServerTemplateRepository",
+      "class": "extas\\components\\servers\\templates\\ServerTemplateRepository"
+    }
+  ],
+  "plugins": [
+    {
+      "class": "extas\\components\\plugins\\PluginInstallServers",
+      "stage": "extas.install"
+    },
+    {
+      "class": "extas\\components\\plugins\\PluginInstallServersTemplates",
+      "stage": "extas.install"
+    },
+    {
+      "class": "extas\\components\\plugins\\PluginRouteAppIndexRun",
+      "stage": "route.app.index.run"
+    }
+  ],
+  "servers_templates": [
+    {
+      "name": "http.base",
+      "description": "",
+      "owner": "extas@jeyroik.gmail.com",
+      "parameters": [
+        {
+          "name": "router",
+          "description": "Router class",
+          "value": "",
+          "template": "class",
+          "template@class": {
+            "args": [
+              {
+                "name": "subject",
+                "description": "Subject field name",
+                "value": "subject",
+                "template": "string",
+                "template@string": {
+                  "max": 256,
+                  "min": 1,
+                  "escape": true
+                }
+              },
+              {
+                "name": "operation",
+                "description": "Operation field name",
+                "value": "operation",
+                "template": "string",
+                "template@string": {
+                  "max": 256,
+                  "min": 1,
+                  "escape": true
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "name": "http.base.default",
+      "description": "Default server",
+      "template": "http.base",
+      "parameters": [
+        {
+          "name": "router",
+          "value": "extas\\components\\plugins\\PluginRouterSubjectOperation",
+          "template": "class",
+          "template@class": {
+            "args": [
+              {
+                "name": "subject",
+                "value": "subject"
+              },
+              {
+                "name": "operation",
+                "value": "operation"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

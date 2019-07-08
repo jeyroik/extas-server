@@ -1,0 +1,15 @@
+{
+  "name": "jeyroik/extas-server",
+  "description": "Extas server package",
+  "require": {
+    "jeyroik/extas-foundation":"*",
+    "jeyroik/extas-installer":"*",
+    "jeyroik/extas-base":"*",
+    "jeyroik/extas-parameter-class": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "extas\\": "src/"
+    }
+  }
+}
