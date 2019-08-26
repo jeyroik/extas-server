@@ -1,8 +1,6 @@
 <?php
 namespace extas\components\servers\templates;
 
-use extas\components\parameters\THasParameters;
-use extas\components\players\THasOwner;
 use extas\components\templates\Template;
 use extas\components\templates\THasTemplate;
 use extas\interfaces\servers\templates\IServerTemplate;
@@ -16,6 +14,4 @@ use extas\interfaces\servers\templates\IServerTemplate;
 class ServerTemplate extends Template implements IServerTemplate
 {
     use THasTemplate;
-    use THasParameters;
-    use THasOwner;
 }

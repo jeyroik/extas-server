@@ -21,7 +21,7 @@
     },
     {
       "class": "extas\\components\\plugins\\PluginRouteAppIndexRun",
-      "stage": "route.app.index.run"
+      "stage": "route.app.index"
     }
   ],
   "servers_templates": [

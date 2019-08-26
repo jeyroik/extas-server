@@ -10,6 +10,6 @@ use extas\interfaces\templates\ITemplate;
  * @package extas\interfaces\servers\templates
  * @author jeyroik@gmail.com
  */
-interface IServerTemplate extends ITemplate, IHasParameters
+interface IServerTemplate extends ITemplate
 {
 }

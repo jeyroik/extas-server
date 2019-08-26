@@ -7,13 +7,13 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Class PluginRouteAppIndex
  *
+ * Stage example: route.app.index.view
+ *
  * @package extas\components\plugins
  * @author jeyroik@gmail.com
  */
 class PluginRouteAppIndexRun extends Plugin
 {
-    public $preDefinedStage = 'route.app.index.run';
-
     /**
      * @param RequestInterface $request
      * @param ResponseInterface $response

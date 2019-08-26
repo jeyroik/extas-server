@@ -36,10 +36,8 @@ class Server extends Item implements IServer
      */
     public function run(RequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $router = $this->getParameter('router')->getValue(new PluginRouterSubjectOperation([
-            'subject' => 'subject',
-            'operation' => 'operation'
-        ]));
+        $routerClass = $this->getParameter('router')->getValue(PluginRouterSubjectOperation::class);
+        $router = new $routerClass();
         $router($request, $response, $args);
 
         return $response;
