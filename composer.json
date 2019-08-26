@@ -1,6 +1,6 @@
 {
-  "name": "jeyroik/extas-server",
-  "description": "Extas server package",
+  "name": "jeyroik/extas-servers",
+  "description": "Extas servers package",
   "require": {
     "jeyroik/extas-foundation":"*",
     "jeyroik/extas-installer":"*",
