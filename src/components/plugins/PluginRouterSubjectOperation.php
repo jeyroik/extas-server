@@ -56,13 +56,37 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
     protected function prepareResponse(RequestInterface $request, ResponseInterface &$response, $serverResponse)
     {
         $responseParameters = $serverResponse->getParameters();
-        $accept = $request->getHeader('ACCEPT');
-        $acceptAsKey = str_replace('/', '.', $accept);
+        $accepts = $this->getAccepts($request->getHeader('ACCEPT'));
 
-        $stage = $serverResponse->getName() . '.' . $acceptAsKey;
-        foreach ($this->getPluginsByStage($stage) as $plugin) {
-            $plugin($response, $responseParameters);
+        foreach ($accepts as $accept) {
+            /**
+             * application/xhtml
+             * application/xhtml+xml
+             * application/xhtml+xml;q=0.8
+             * application/signed-exchange;v=b3
+             */
+            if (strpos($accept, ';') !== false) {
+                list($accept) = explode(';', $accept);
+            }
+            $acceptAsKey = str_replace(['/', '+', '-'], '.', $accept);
+
+            $stage = $serverResponse->getName() . '.' . $acceptAsKey;
+            foreach ($this->getPluginsByStage($stage) as $plugin) {
+                $plugin($response, $responseParameters);
+            }
         }
+    }
+
+    /**
+     * @param $header
+     *
+     * @return array
+     */
+    protected function getAccepts($header)
+    {
+        $header = is_array($header) ? array_shift($header) : $header;
+
+        return strpos($header, ',') !== false ? explode(',', $header) : [$header];
     }
 
     /**
@@ -106,6 +130,8 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
      */
     protected function convertMethodToOperation($method)
     {
+        $method = is_array($method) ? array_shift($method) : $method;
+
         $map = [
             'get' => 'view',
             'put' => 'update',
