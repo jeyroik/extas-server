@@ -1,7 +1,8 @@
 <?php
 namespace extas\components\plugins;
 
-use Psr\Http\Message\RequestInterface;
+use extas\interfaces\servers\requests\IServerRequest;
+use extas\interfaces\servers\responses\IServerResponse;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -15,23 +16,34 @@ use Psr\Http\Message\ResponseInterface;
 class PluginRouteAppIndexRun extends Plugin
 {
     /**
-     * @param RequestInterface $request
-     * @param ResponseInterface $response
+     * @param IServerRequest $request
+     * @param IServerResponse $response
      * @param array $args
      *
      * @return mixed|void
      */
-    public function __invoke(RequestInterface &$request, ResponseInterface &$response, array &$args)
+    public function __invoke(IServerRequest &$request, IServerResponse &$response, array &$args)
     {
         $responseMessage = 'It works! Welcome to Extas Server v0.0.1';
 
-        if ($response->hasHeader('ACCEPT')) {
-            $accept = $response->getHeader('ACCEPT');
+        /**
+         * @var $httpResponse ResponseInterface
+         */
+        $httpResponse = $response->getParameter(IServerResponse::PARAMETER__HTTP_RESPONSE);
+        if ($httpResponse && $httpResponse->hasHeader('ACCEPT')) {
+            $accept = $httpResponse->getHeader('ACCEPT');
             if (strpos($accept, 'text') === false) {
                 $responseMessage = 'Please, send ACCEPT header with "text/html" to see result';
             }
         }
 
-        $response->getBody()->write($responseMessage);
+        $response->setParameter('app', [
+            'name' => getenv('EXTAS__APP_NAME') ?: 'extas',
+            'title' => getenv('EXTAS__APP_TITLE') ?: 'Extas application',
+            'description' => getenv('EXTAS__APP_NAME') ?: 'Default app/index/view dispatcher',
+            'copyright' => '2019-' . date('Y') . ' jeyroik@gmail.com',
+            'content' => $responseMessage,
+            'expand' => ['version']
+        ]);
     }
 }

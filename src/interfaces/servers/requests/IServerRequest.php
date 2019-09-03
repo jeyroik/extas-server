@@ -17,6 +17,8 @@ interface IServerRequest extends IItem, IHasName, IHasDescription, IHasOwner, IH
 {
     const SUBJECT = 'extas.server.request';
 
+    const PARAMETER__HTTP_REQUEST = 'http_request';
+
     /**
      * @param $array
      *

@@ -6,6 +6,7 @@ use extas\components\servers\requests\ServerRequest;
 use extas\components\servers\responses\ServerResponse;
 use extas\interfaces\IHasName;
 use extas\interfaces\parameters\IHasParameters;
+use extas\interfaces\parameters\IParameter;
 use extas\interfaces\players\IHasOwner;
 use extas\interfaces\servers\requests\IServerRequest;
 use extas\interfaces\servers\responses\IServerResponse;
@@ -35,17 +36,52 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
         $operation = $this->convertMethodToOperation($request->getHeader('REQUEST_METHOD'));
 
         $serverRequest = new ServerRequest([
-            IHasParameters::FIELD__PARAMETERS => ServerRequest::makeParametersFrom($args, 'string'),
+            IHasParameters::FIELD__PARAMETERS => $this->makeRequestParameters($request, $args),
             IHasName::FIELD__NAME =>  $section . '.' . $subject . '.' . $operation,
             IHasOwner::FIELD__OWNER => Current::player()->getName()
         ]);
 
         $serverResponse = new ServerResponse([
-            IHasName::FIELD__NAME => $serverRequest->getName() . '.response'
+            IHasParameters::FIELD__PARAMETERS => $this->makeResponseParameters($response),
+            IHasName::FIELD__NAME => $serverRequest->getName()
         ]);
 
         $this->dispatchRequest($serverRequest, $serverResponse, $section, $subject, $operation);
         $this->prepareResponse($request, $response, $serverResponse);
+    }
+
+    /**
+     * @param $response
+     *
+     * @return array
+     */
+    protected function makeResponseParameters($response)
+    {
+        return [
+            [
+                IParameter::FIELD__NAME => ServerResponse::PARAMETER__HTTP_RESPONSE,
+                IParameter::FIELD__VALUE => $response,
+                IParameter::FIELD__TEMPLATE => ResponseInterface::class
+            ]
+        ];
+    }
+
+    /**
+     * @param $request
+     * @param $args
+     *
+     * @return array
+     */
+    protected function makeRequestParameters($request, $args)
+    {
+        $parameters = ServerRequest::makeParametersFrom($args, 'string');
+        $parameters[] = [
+            IParameter::FIELD__NAME => ServerRequest::PARAMETER__HTTP_REQUEST,
+            IParameter::FIELD__VALUE => $request,
+            IParameter::FIELD__TEMPLATE => RequestInterface::class
+        ];
+
+        return $parameters;
     }
 
     /**
@@ -70,7 +106,12 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
             }
             $acceptAsKey = str_replace(['/', '+', '-'], '.', $accept);
 
-            $stage = $serverResponse->getName() . '.' . $acceptAsKey;
+            $stage = $acceptAsKey . '.prepare.response';
+            foreach ($this->getPluginsByStage($stage) as $plugin) {
+                $plugin($response, $responseParameters);
+            }
+
+            $stage .= '.' . $serverResponse->getName();
             foreach ($this->getPluginsByStage($stage) as $plugin) {
                 $plugin($response, $responseParameters);
             }

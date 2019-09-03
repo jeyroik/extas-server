@@ -16,4 +16,6 @@ use extas\interfaces\players\IHasOwner;
 interface IServerResponse extends IItem, IHasParameters, IHasOwner, IHasName, IHasDescription
 {
     const SUBJECT = 'extas.server.response';
+
+    const PARAMETER__HTTP_RESPONSE = 'http_response';
 }
