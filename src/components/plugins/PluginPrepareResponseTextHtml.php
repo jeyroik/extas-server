@@ -1,7 +1,6 @@
 <?php
-namespace df\components\plugins;
+namespace extas\components\plugins;
 
-use extas\components\plugins\Plugin;
 use extas\interfaces\parameters\IParameter;
 use Psr\Http\Message\ResponseInterface;
 
