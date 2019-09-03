@@ -18,18 +18,17 @@ class PluginRouteAppIndexRun extends Plugin
     /**
      * @param IServerRequest $request
      * @param IServerResponse $response
-     * @param array $args
      *
      * @return mixed|void
      */
-    public function __invoke(IServerRequest &$request, IServerResponse &$response, array &$args)
+    public function __invoke(IServerRequest &$request, IServerResponse &$response)
     {
         $responseMessage = 'It works! Welcome to Extas Server v0.0.1';
 
         /**
          * @var $httpResponse ResponseInterface
          */
-        $httpResponse = $response->getParameter(IServerResponse::PARAMETER__HTTP_RESPONSE);
+        $httpResponse = $response->getParameter(IServerResponse::PARAMETER__HTTP_RESPONSE)->getValue();
         if ($httpResponse && $httpResponse->hasHeader('ACCEPT')) {
             $accept = $httpResponse->getHeader('ACCEPT');
             if (strpos($accept, 'text') === false) {
