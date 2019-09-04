@@ -26,6 +26,10 @@
     {
       "class": "extas\\components\\plugins\\PluginPrepareResponseTextHtml",
       "stage": "text.html.prepare.response"
+    },
+    {
+      "class": "extas\\components\\plugins\\PluginPrepareResponseApplicationJson",
+      "stage": "application.json.prepare.response"
     }
   ],
   "servers_templates": [
