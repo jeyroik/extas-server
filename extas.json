@@ -20,10 +20,6 @@
       "stage": "extas.install"
     },
     {
-      "class": "extas\\components\\plugins\\PluginRouteAppIndexRun",
-      "stage": "route.app.index.view"
-    },
-    {
       "class": "extas\\components\\plugins\\PluginPrepareResponseTextHtml",
       "stage": "text.html.prepare.response"
     },

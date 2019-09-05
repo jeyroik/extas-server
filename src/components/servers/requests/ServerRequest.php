@@ -44,6 +44,28 @@ class ServerRequest extends Item implements IServerRequest
     }
 
     /**
+     * @return string[]
+     */
+    public function getExpand(): array
+    {
+        $expand = $this->getParameter(static::PARAMETER__EXPAND, null);
+
+        return $expand ? explode(',', str_replace(' ', '', $expand)) : [];
+    }
+
+    /**
+     * @param string $expand
+     *
+     * @return bool
+     */
+    public function isExpandedWith($expand): bool
+    {
+        $expands = $this->getExpand();
+
+        return in_array($expand, $expands);
+    }
+
+    /**
      * @return string
      */
     protected function getSubjectForExtension(): string

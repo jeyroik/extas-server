@@ -18,6 +18,7 @@ interface IServerRequest extends IItem, IHasName, IHasDescription, IHasOwner, IH
     const SUBJECT = 'extas.server.request';
 
     const PARAMETER__HTTP_REQUEST = 'http_request';
+    const PARAMETER__EXPAND = 'expand';
 
     /**
      * @param $array
@@ -25,4 +26,16 @@ interface IServerRequest extends IItem, IHasName, IHasDescription, IHasOwner, IH
      * @return array
      */
     public static function makeParametersFrom($array): array;
+
+    /**
+     * @return string[]
+     */
+    public function getExpand(): array;
+
+    /**
+     * @param string $expand
+     *
+     * @return bool
+     */
+    public function isExpandedWith($expand): bool;
 }
