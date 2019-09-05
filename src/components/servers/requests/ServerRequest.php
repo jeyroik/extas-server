@@ -50,7 +50,7 @@ class ServerRequest extends Item implements IServerRequest
     {
         $expand = $this->getParameter(static::PARAMETER__EXPAND, null);
 
-        return $expand ? explode(',', str_replace(' ', '', $expand)) : [];
+        return $expand ? explode(',', str_replace(' ', '', $expand->getValue())) : [];
     }
 
     /**
