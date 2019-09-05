@@ -67,13 +67,15 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
     }
 
     /**
-     * @param $request
+     * @param RequestInterface $request
      * @param $args
      *
      * @return array
      */
     protected function makeRequestParameters($request, $args)
     {
+        parse_str($request->getUri()->getQuery(), $queryParams);
+        $args = array_merge($args, $queryParams);
         $parameters = ServerRequest::makeParametersFrom($args, 'string');
         $parameters[] = [
             IParameter::FIELD__NAME => ServerRequest::PARAMETER__HTTP_REQUEST,

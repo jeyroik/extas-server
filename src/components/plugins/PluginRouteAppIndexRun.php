@@ -37,7 +37,7 @@ class PluginRouteAppIndexRun extends Plugin
             }
         }
 
-        $response->setParameter('app', [
+        $app = [
             IParameter::FIELD__NAME => 'app',
             IParameter::FIELD__TEMPLATE => 'entity',
             IParameter::FIELD__VALUE => [
@@ -48,6 +48,11 @@ class PluginRouteAppIndexRun extends Plugin
                 'content' => $responseMessage,
                 'expand' => ['version']
             ]
-        ]);
+        ];
+        $expand = $request->getParameter('expand');
+        if ($expand && $expand->getValue('') == 'version') {
+            $app[IParameter::FIELD__VALUE]['version'] = '1.0';
+        }
+        $response->setParameter('app', $app);
     }
 }
