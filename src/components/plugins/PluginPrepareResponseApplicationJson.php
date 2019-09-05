@@ -25,6 +25,9 @@ class PluginPrepareResponseApplicationJson extends Plugin
             $responseBody[$parameter->getName()] = $parameter->getValue();
         }
 
-        $response->withStatus($status)->getBody()->write(json_encode($responseBody));
+        $response->withHeader('Content-Type', 'application/json')
+            ->withStatus($status)
+            ->getBody()
+            ->write(json_encode($responseBody));
     }
 }
