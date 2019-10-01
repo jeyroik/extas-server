@@ -22,6 +22,12 @@ use Psr\Http\Message\ResponseInterface;
  */
 class PluginRouterSubjectOperation extends Plugin implements IServerRouter
 {
+    const ENV__DEFAULT_SECTION = 'EXTAS__SERVER__DEFAULT_SECTION';
+    const ENV__DEFAULT_SUBJECT = 'EXTAS__SERVER__DEFAULT_SUBJECT';
+
+    const DEFAULT__SECTION = 'app';
+    const DEFAULT__SUBJECT = 'index';
+
     /**
      * @param RequestInterface $request
      * @param ResponseInterface $response
@@ -31,8 +37,8 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
      */
     public function __invoke(RequestInterface &$request, ResponseInterface &$response, array &$args)
     {
-        $section = $args['section'] ?? 'app';
-        $subject = $args['subject'] ?? 'index';
+        $section = $args['section'] ?? $this->extractSection($request);
+        $subject = $args['subject'] ?? static::DEFAULT__SUBJECT;
         $operation = $args['operation'] ?? $this->convertMethodToOperation($request);
 
         $serverRequest = new ServerRequest([
@@ -56,6 +62,21 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
     public function getOperationMap(): array
     {
         return $this->config[static::FIELD__OPERATION_MAP] ?? [];
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return string
+     */
+    protected function extractSection($request): string
+    {
+        $headers = $request->getHeader('x-extas-section');
+        if (count($headers)) {
+            return array_shift($headers);
+        }
+
+        return getenv(static::ENV__DEFAULT_SECTION) ?: static::DEFAULT__SECTION;
     }
 
     /**
