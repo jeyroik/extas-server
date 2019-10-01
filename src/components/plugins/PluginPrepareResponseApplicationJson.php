@@ -22,7 +22,10 @@ class PluginPrepareResponseApplicationJson extends Plugin
         $status = 200;
 
         foreach ($responseParameters as $parameter) {
-            $responseBody[$parameter->getName()] = $parameter->getValue();
+            $value = $parameter->getValue();
+            if ($value) {
+                $responseBody[$parameter->getName()] = $parameter->getValue();
+            }
         }
 
         /**

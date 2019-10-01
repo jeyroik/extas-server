@@ -16,7 +16,7 @@ return function ($request, $response, $args) {
      * @var $servers \extas\interfaces\servers\IServer[]
      */
     $serverRepo = Container::getItem(IRepo::class);
-    $servers = $serverRepo->all([IServer::FIELD__TEMPLATE => 'http.base']);
+    $servers = $serverRepo->all([IServer::FIELD__TEMPLATE => 'http_base']);
 
     foreach ($servers as $server) {
         $response = $server->run($request, $response, $args);

@@ -30,7 +30,7 @@
   ],
   "servers_templates": [
     {
-      "name": "http.base",
+      "name": "http_base",
       "description": "",
       "owner": "extas@jeyroik.gmail.com",
       "parameters": [
@@ -73,7 +73,7 @@
     {
       "name": "http.base.default",
       "description": "Default server",
-      "template": "http.base",
+      "template": "http_base",
       "parameters": [
         {
           "name": "router",
@@ -90,6 +90,20 @@
                 "value": "operation"
               }
             ]
+          }
+        },
+        {
+          "name": "operation.map",
+          "value": {
+            "get": "view",
+            "put": "update",
+            "post": "create",
+            "delete": "delete",
+            "@default": "view"
+          },
+          "template": "map",
+          "map": {
+            "default": "@default"
           }
         }
       ]

@@ -13,6 +13,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface IServerRouter extends IPlugin
 {
+    const FIELD__OPERATION_MAP = 'map';
+
     /**
      * @param RequestInterface $request
      * @param ResponseInterface $response
@@ -21,4 +23,9 @@ interface IServerRouter extends IPlugin
      * @return mixed
      */
     public function __invoke(RequestInterface &$request, ResponseInterface &$response, array &$args);
+
+    /**
+     * @return array
+     */
+    public function getOperationMap(): array;
 }

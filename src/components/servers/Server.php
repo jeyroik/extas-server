@@ -10,6 +10,7 @@ use extas\components\THasDescription;
 use extas\components\THasName;
 use extas\interfaces\servers\IServer;
 
+use extas\interfaces\servers\routers\IServerRouter;
 use extas\interfaces\servers\templates\IServerTemplateRepository;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -37,7 +38,8 @@ class Server extends Item implements IServer
     public function run(RequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $routerClass = $this->getParameter('router')->getValue(PluginRouterSubjectOperation::class);
-        $router = new $routerClass();
+        $map = $this->getParameter('operation.map')->getValue();
+        $router = new $routerClass([IServerRouter::FIELD__OPERATION_MAP => $map]);
         $router($request, $response, $args);
 
         return $response;

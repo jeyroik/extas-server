@@ -33,7 +33,7 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
     {
         $section = $args['section'] ?? 'app';
         $subject = $args['subject'] ?? 'index';
-        $operation = $this->convertMethodToOperation($request->getHeader('REQUEST_METHOD'));
+        $operation = $args['operation'] ?? $this->convertMethodToOperation($request);
 
         $serverRequest = new ServerRequest([
             IHasParameters::FIELD__PARAMETERS => $this->makeRequestParameters($request, $args),
@@ -48,6 +48,14 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
 
         $this->dispatchRequest($serverRequest, $serverResponse, $section, $subject, $operation);
         $this->prepareResponse($request, $response, $serverResponse);
+    }
+
+    /**
+     * @return array
+     */
+    public function getOperationMap(): array
+    {
+        return $this->config[static::FIELD__OPERATION_MAP] ?? [];
     }
 
     /**
@@ -167,21 +175,14 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
     }
 
     /**
-     * @param $method
+     * @param RequestInterface $request
      *
      * @return string
      */
-    protected function convertMethodToOperation($method)
+    protected function convertMethodToOperation($request)
     {
-        $method = is_array($method) ? array_shift($method) : $method;
-
-        $map = [
-            'get' => 'view',
-            'put' => 'update',
-            'post' => 'create',
-            'delete' => 'delete',
-            '@default' => 'view'
-        ];
+        $map = $this->getOperationMap();
+        $method = array_shift($request->getHeader('REQUEST_METHOD'));
 
         return $map[$method] ?? $map['@default'];
     }

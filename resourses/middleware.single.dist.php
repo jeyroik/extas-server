@@ -16,7 +16,7 @@ return function ($request, $response, $args) {
      * @var $server \extas\interfaces\servers\IServer
      */
     $serverRepo = Container::getItem(IRepo::class);
-    $server = $serverRepo->one([IServer::FIELD__NAME => 'http.base']);
+    $server = $serverRepo->one([IServer::FIELD__NAME => 'http_base']);
 
     if ($server) {
         return $server->run($request, $response, $args);
