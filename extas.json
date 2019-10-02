@@ -28,6 +28,15 @@
       "stage": "application.json.prepare.response"
     }
   ],
+  "protocols": [
+    {
+      "name": "server",
+      "title": "Extas server",
+      "description": "Parse headers and request parameters for server attribute",
+      "accept": ["*"],
+      "class": "extas\\components\\protocols\\ProtocolServer"
+    }
+  ],
   "servers_templates": [
     {
       "name": "http_base",

@@ -4,6 +4,7 @@ namespace extas\components\plugins;
 use extas\components\players\Current;
 use extas\components\servers\requests\ServerRequest;
 use extas\components\servers\responses\ServerResponse;
+use extas\interfaces\access\IAccess;
 use extas\interfaces\IHasName;
 use extas\interfaces\parameters\IHasParameters;
 use extas\interfaces\parameters\IParameter;
@@ -22,12 +23,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class PluginRouterSubjectOperation extends Plugin implements IServerRouter
 {
-    const ENV__DEFAULT_SECTION = 'EXTAS__SERVER__DEFAULT_SECTION';
-    const ENV__DEFAULT_SUBJECT = 'EXTAS__SERVER__DEFAULT_SUBJECT';
-
-    const DEFAULT__SECTION = 'app';
-    const DEFAULT__SUBJECT = 'index';
-
     /**
      * @param RequestInterface $request
      * @param ResponseInterface $response
@@ -37,12 +32,12 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
      */
     public function __invoke(RequestInterface &$request, ResponseInterface &$response, array &$args)
     {
-        $section = $args['section'] ?? $this->extractSection($request);
-        $subject = $args['subject'] ?? static::DEFAULT__SUBJECT;
-        $operation = $args['operation'] ?? $this->convertMethodToOperation($request);
+        $section = $args[IAccess::FIELD__SECTION] ?? '';
+        $subject = $args[IAccess::FIELD__SUBJECT] ?? '';
+        $operation = $args[IAccess::FIELD__OPERATION] ?? '';
 
         $serverRequest = new ServerRequest([
-            IHasParameters::FIELD__PARAMETERS => $this->makeRequestParameters($request, $args),
+            IHasParameters::FIELD__PARAMETERS => $args,
             IHasName::FIELD__NAME =>  $section . '.' . $subject . '.' . $operation,
             IHasOwner::FIELD__OWNER => Current::player()->getName()
         ]);
@@ -65,21 +60,6 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
     }
 
     /**
-     * @param RequestInterface $request
-     *
-     * @return string
-     */
-    protected function extractSection($request): string
-    {
-        $headers = $request->getHeader('x-extas-section');
-        if (count($headers)) {
-            return array_shift($headers);
-        }
-
-        return getenv(static::ENV__DEFAULT_SECTION) ?: static::DEFAULT__SECTION;
-    }
-
-    /**
      * @param $response
      *
      * @return array
@@ -93,26 +73,6 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
                 IParameter::FIELD__TEMPLATE => ResponseInterface::class
             ]
         ];
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @param $args
-     *
-     * @return array
-     */
-    protected function makeRequestParameters($request, $args)
-    {
-        parse_str($request->getUri()->getQuery(), $queryParams);
-        $args = array_merge($args, $queryParams);
-        $parameters = ServerRequest::makeParametersFrom($args, 'string');
-        $parameters[] = [
-            IParameter::FIELD__NAME => ServerRequest::PARAMETER__HTTP_REQUEST,
-            IParameter::FIELD__VALUE => $request,
-            IParameter::FIELD__TEMPLATE => RequestInterface::class
-        ];
-
-        return $parameters;
     }
 
     /**
@@ -193,18 +153,5 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
         foreach ($this->getPluginsByStage('route.after') as $plugin) {
             $plugin($serverRequest, $serverResponse);
         }
-    }
-
-    /**
-     * @param RequestInterface $request
-     *
-     * @return string
-     */
-    protected function convertMethodToOperation($request)
-    {
-        $map = $this->getOperationMap();
-        $method = array_shift($request->getHeader('REQUEST_METHOD'));
-
-        return $map[$method] ?? $map['@default'];
     }
 }
