@@ -37,7 +37,7 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
         $operation = $args[IAccess::FIELD__OPERATION] ?? '';
 
         $serverRequest = new ServerRequest([
-            IHasParameters::FIELD__PARAMETERS => $args,
+            IHasParameters::FIELD__PARAMETERS => ServerRequest::makeParametersFrom($args, 'string'),
             IHasName::FIELD__NAME =>  $section . '.' . $subject . '.' . $operation,
             IHasOwner::FIELD__OWNER => Current::player()->getName()
         ]);
