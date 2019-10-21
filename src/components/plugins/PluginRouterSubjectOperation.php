@@ -35,6 +35,7 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
         $section = $args[IAccess::FIELD__SECTION] ?? '';
         $subject = $args[IAccess::FIELD__SUBJECT] ?? '';
         $operation = $args[IAccess::FIELD__OPERATION] ?? '';
+        $args['accept'] = $this->getAccepts($request->getHeader('accept'));
 
         $serverRequest = new ServerRequest([
             IHasParameters::FIELD__PARAMETERS => ServerRequest::makeParametersFrom($args, 'string'),
@@ -135,7 +136,7 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
         $stageRunAfter = 'route.' . $section . '.' .  $subject . '.' . $operation . '.after';
 
         foreach ($this->getPluginsByStage('route.before') as $plugin) {
-            $plugin($serverRequest, $serverResponse);
+            $plugin($serverRequest, $serverResponse, $section, $subject, $operation);
         }
 
         foreach ($this->getPluginsByStage($stageRunBefore) as $plugin) {
@@ -151,7 +152,7 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
         }
 
         foreach ($this->getPluginsByStage('route.after') as $plugin) {
-            $plugin($serverRequest, $serverResponse);
+            $plugin($serverRequest, $serverResponse, $section, $subject, $operation);
         }
     }
 }
