@@ -6,6 +6,7 @@ use extas\components\parameters\THasParameters;
 use extas\components\players\THasOwner;
 use extas\components\THasDescription;
 use extas\components\THasName;
+use extas\interfaces\parameters\IParameter;
 use extas\interfaces\servers\responses\IServerResponse;
 
 /**
@@ -20,6 +21,27 @@ class ServerResponse extends Item implements IServerResponse
     use THasDescription;
     use THasOwner;
     use THasParameters;
+
+    /**
+     * @param $array
+     * @param string $defaultTemplate
+     *
+     * @return array
+     */
+    public static function makeParametersFrom($array, $defaultTemplate = 'string'): array
+    {
+        $parameters = [];
+
+        foreach ($array as $name => $value) {
+            $parameters[] = [
+                IParameter::FIELD__NAME => $name,
+                IParameter::FIELD__VALUE => $value,
+                IParameter::FIELD__TEMPLATE => $defaultTemplate
+            ];
+        }
+
+        return $parameters;
+    }
 
     /**
      * @return string
