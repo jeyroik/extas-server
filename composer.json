@@ -7,7 +7,8 @@
     "jeyroik/extas-base":"*",
     "jeyroik/extas-parameter-class": "*",
     "jeyroik/extas-access": "*",
-    "jeyroik/extas-templates": "*"
+    "jeyroik/extas-templates": "*",
+    "jeyroik/extas-protocols": "*"
   },
   "autoload": {
     "psr-4": {
