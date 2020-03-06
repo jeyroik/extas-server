@@ -12,9 +12,9 @@ use extas\interfaces\servers\templates\IServerTemplateRepository;
  */
 class PluginInstallServersTemplates extends PluginInstallDefault
 {
-    protected $selfItemClass = ServerTemplate::class;
-    protected $selfName = 'server template';
-    protected $selfSection = 'servers_templates';
-    protected $selfUID = ServerTemplate::FIELD__NAME;
-    protected $selfRepositoryClass = IServerTemplateRepository::class;
+    protected string $selfItemClass = ServerTemplate::class;
+    protected string $selfName = 'server template';
+    protected string $selfSection = 'servers_templates';
+    protected string $selfUID = ServerTemplate::FIELD__NAME;
+    protected string $selfRepositoryClass = IServerTemplateRepository::class;
 }

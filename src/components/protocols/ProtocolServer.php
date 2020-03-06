@@ -13,5 +13,5 @@ namespace extas\components\protocols;
  */
 class ProtocolServer extends ProtocolParameterHeaderDefault
 {
-    protected $protocolKey = 'server';
+    protected string $protocolKey = 'server';
 }
