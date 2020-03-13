@@ -5,10 +5,10 @@
     "jeyroik/extas-foundation":"2.*",
     "jeyroik/extas-installer":"2.*",
     "jeyroik/extas-base":"1.*",
-    "jeyroik/extas-parameter-class": "*",
-    "jeyroik/extas-access": "*",
-    "jeyroik/extas-templates": "*",
-    "jeyroik/extas-protocols": "*"
+    "jeyroik/extas-parameter-class": "1.*",
+    "jeyroik/extas-access": "2.*",
+    "jeyroik/extas-templates": "1.*",
+    "jeyroik/extas-protocols": "1.*"
   },
   "autoload": {
     "psr-4": {
