@@ -2,7 +2,6 @@
   "name": "jeyroik/extas-servers",
   "description": "Extas servers package",
   "require": {
-    "jeyroik/extas-foundation":"2.*",
     "jeyroik/extas-installer":"2.*",
     "jeyroik/extas-base":"1.*",
     "jeyroik/extas-parameter-class": "1.*",
