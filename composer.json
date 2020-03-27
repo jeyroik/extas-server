@@ -4,7 +4,6 @@
   "require": {
     "jeyroik/extas-installer":"2.*",
     "jeyroik/extas-parameter-class": "1.*",
-    "jeyroik/extas-access": "2.*",
     "jeyroik/extas-templates": "1.*",
     "jeyroik/extas-protocols": "1.*",
     "jeyroik/extas-parameters": "0.*"
