@@ -6,7 +6,8 @@
     "jeyroik/extas-parameter-class": "1.*",
     "jeyroik/extas-templates": "1.*",
     "jeyroik/extas-protocols": "1.*",
-    "jeyroik/extas-parameters": "0.*"
+    "jeyroik/extas-parameters": "0.*",
+    "jeyroik/extas-players": "1.*"
   },
   "autoload": {
     "psr-4": {
