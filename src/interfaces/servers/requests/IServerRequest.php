@@ -5,7 +5,7 @@ use extas\interfaces\IHasDescription;
 use extas\interfaces\IHasName;
 use extas\interfaces\IItem;
 use extas\interfaces\parameters\IHasParameters;
-use extas\interfaces\players\IHasOwner;
+use extas\interfaces\players\IHasPlayer;
 
 /**
  * Interface IServerRequest
@@ -13,7 +13,7 @@ use extas\interfaces\players\IHasOwner;
  * @package extas\interfaces\servers\requests
  * @author jeyroik@gmail.com
  */
-interface IServerRequest extends IItem, IHasName, IHasDescription, IHasOwner, IHasParameters
+interface IServerRequest extends IItem, IHasName, IHasDescription, IHasPlayer, IHasParameters
 {
     const SUBJECT = 'extas.server.request';
 

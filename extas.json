@@ -41,7 +41,7 @@
     {
       "name": "http_base",
       "description": "",
-      "owner": "extas@jeyroik.gmail.com",
+      "player_name": "jeyroik@gmail.com",
       "parameters": [
         {
           "name": "router",

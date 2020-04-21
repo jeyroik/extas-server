@@ -8,7 +8,7 @@ use extas\interfaces\access\IAccess;
 use extas\interfaces\IHasName;
 use extas\interfaces\parameters\IHasParameters;
 use extas\interfaces\parameters\IParameter;
-use extas\interfaces\players\IHasOwner;
+use extas\interfaces\players\IHasPlayer;
 use extas\interfaces\servers\requests\IServerRequest;
 use extas\interfaces\servers\responses\IServerResponse;
 use extas\interfaces\servers\routers\IServerRouter;
@@ -39,8 +39,7 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
 
         $serverRequest = new ServerRequest([
             IHasParameters::FIELD__PARAMETERS => ServerRequest::makeParametersFrom($args, 'string'),
-            IHasName::FIELD__NAME =>  $section . '.' . $subject . '.' . $operation,
-            IHasOwner::FIELD__OWNER => Current::player()->getName()
+            IHasName::FIELD__NAME =>  $section . '.' . $subject . '.' . $operation
         ]);
 
         $serverResponse = new ServerResponse([

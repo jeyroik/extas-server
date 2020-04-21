@@ -3,7 +3,7 @@ namespace extas\components\servers\requests;
 
 use extas\components\Item;
 use extas\components\parameters\THasParameters;
-use extas\components\players\THasOwner;
+use extas\components\players\THasPlayer;
 use extas\components\THasDescription;
 use extas\components\THasName;
 use extas\interfaces\parameters\IParameter;
@@ -17,7 +17,7 @@ use extas\interfaces\servers\requests\IServerRequest;
  */
 class ServerRequest extends Item implements IServerRequest
 {
-    use THasOwner;
+    use THasPlayer;
     use THasName;
     use THasDescription;
     use THasParameters;
