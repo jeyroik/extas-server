@@ -1,5 +1,5 @@
 {
-  "name": "extas.server",
+  "name": "extas/servers",
   "package_classes": [
     {
       "interface": "extas\\interfaces\\servers\\IServerRepository",

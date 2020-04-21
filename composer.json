@@ -2,12 +2,11 @@
   "name": "jeyroik/extas-servers",
   "description": "Extas servers package",
   "require": {
-    "jeyroik/extas-foundation":"*",
-    "jeyroik/extas-installer":"*",
-    "jeyroik/extas-base":"*",
-    "jeyroik/extas-parameter-class": "*",
-    "jeyroik/extas-access": "*",
-    "jeyroik/extas-templates": "*"
+    "jeyroik/extas-installer":"2.*",
+    "jeyroik/extas-parameter-class": "1.*",
+    "jeyroik/extas-templates": "1.*",
+    "jeyroik/extas-protocols": "1.*",
+    "jeyroik/extas-parameters": "0.*"
   },
   "autoload": {
     "psr-4": {

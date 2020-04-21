@@ -4,7 +4,6 @@ namespace extas\components\plugins;
 use extas\components\players\Current;
 use extas\components\servers\requests\ServerRequest;
 use extas\components\servers\responses\ServerResponse;
-use extas\interfaces\access\IAccess;
 use extas\interfaces\IHasName;
 use extas\interfaces\parameters\IHasParameters;
 use extas\interfaces\parameters\IParameter;
@@ -32,9 +31,9 @@ class PluginRouterSubjectOperation extends Plugin implements IServerRouter
      */
     public function __invoke(RequestInterface &$request, ResponseInterface &$response, array &$args)
     {
-        $section = $args[IAccess::FIELD__SECTION] ?? '';
-        $subject = $args[IAccess::FIELD__SUBJECT] ?? '';
-        $operation = $args[IAccess::FIELD__OPERATION] ?? '';
+        $section = $args['section'] ?? '';
+        $subject = $args['subject'] ?? '';
+        $operation = $args['operation'] ?? '';
         $args['accept'] = $this->getAccepts($request->getHeader('accept'));
 
         $serverRequest = new ServerRequest([

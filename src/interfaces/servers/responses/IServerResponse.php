@@ -18,4 +18,12 @@ interface IServerResponse extends IItem, IHasParameters, IHasPlayer, IHasName, I
     const SUBJECT = 'extas.server.response';
 
     const PARAMETER__HTTP_RESPONSE = 'http_response';
+
+    /**
+     * @param $array
+     * @param string $defaultTemplate
+     *
+     * @return array
+     */
+    public static function makeParametersFrom($array, $defaultTemplate = 'string'): array;
 }

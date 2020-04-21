@@ -12,9 +12,9 @@ use extas\interfaces\servers\IServerRepository;
  */
 class ServerRepository extends Repository implements IServerRepository
 {
-    protected $idAs = '';
-    protected $scope = 'extas';
-    protected $name = 'servers';
-    protected $pk = Server::FIELD__NAME;
-    protected $itemClass = Server::class;
+    protected string $idAs = '';
+    protected string $scope = 'extas';
+    protected string $name = 'servers';
+    protected string $pk = Server::FIELD__NAME;
+    protected string $itemClass = Server::class;
 }

@@ -12,9 +12,9 @@ use extas\interfaces\servers\IServerRepository;
  */
 class PluginInstallServers extends PluginInstallDefault
 {
-    protected $selfItemClass = Server::class;
-    protected $selfName = 'server';
-    protected $selfSection = 'servers';
-    protected $selfUID = Server::FIELD__NAME;
-    protected $selfRepositoryClass = IServerRepository::class;
+    protected string $selfItemClass = Server::class;
+    protected string $selfName = 'server';
+    protected string $selfSection = 'servers';
+    protected string $selfUID = Server::FIELD__NAME;
+    protected string $selfRepositoryClass = IServerRepository::class;
 }
